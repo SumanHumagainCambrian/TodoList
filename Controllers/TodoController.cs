@@ -39,5 +39,23 @@ namespace TodoList.Controllers
             return items;
         }
 
+
+
+        // Create new ToDoItem
+        [HttpPost("create")]
+        public async Task<ActionResult<ToDoItem>> CreateNewItem(ToDoItem ToDoItem)
+        {
+            _context.ToDoItems.Add(ToDoItem);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
