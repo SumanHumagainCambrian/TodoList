@@ -25,6 +25,19 @@ namespace TodoList.Controllers
             return incompleteItem;
         }
 
+        // Get by ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ToDoItem>> GetToDoItemById(int id)
+        {
+            var items = await _context.ToDoItems.FindAsync(id);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return items;
+        }
 
     }
 }
