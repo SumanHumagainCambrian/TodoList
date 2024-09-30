@@ -78,8 +78,15 @@ namespace TodoList.Controllers
 
             _context.Entry(toDoItem).State = EntityState.Modified;
 
-            await _context.SaveChangesAsync();
-            return Ok();
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // Delete ToDoItem by ID
