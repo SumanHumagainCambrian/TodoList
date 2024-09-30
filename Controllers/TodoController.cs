@@ -57,5 +57,40 @@ namespace TodoList.Controllers
             }
         }
 
+
+
+        // Update item
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTodoItem(int id, ToDoItem ToDoItem)
+        {
+            if (id != ToDoItem.Id)
+            {
+                return BadRequest();
+            }
+
+            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            if (toDoItem == null)
+            {
+                return NotFound();
+            }
+
+            toDoItem.CompletedDate = DateTime.Now;//completed date as current date time
+
+            _context.Entry(toDoItem).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        // Delete ToDoItem by ID
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteToDoItem(int id)
+        {
+            var deleteItem = await _context.ToDoItems.FindAsync(id);
+            _context.ToDoItems.Remove(deleteItem);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }
