@@ -94,6 +94,10 @@ namespace TodoList.Controllers
         public async Task<IActionResult> DeleteToDoItem(int id)
         {
             var deleteItem = await _context.ToDoItems.FindAsync(id);
+            if (deleteItem == null)
+            {
+                return NotFound();
+            }
             _context.ToDoItems.Remove(deleteItem);
             await _context.SaveChangesAsync();
             return Ok();
